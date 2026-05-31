@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Prasad's Premium Project</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../assets/css/contact-us.css">
+</head>
+<body>
+
+    <main class="main-container">
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="spotlight"></div>
+            <div class="container reveal">
+                <h1 class="hero-title">Let's Connect</h1>
+                <p class="hero-subtitle">Get in touch with Prasad Madole. I'd love to hear from you!</p>
+            </div>
+        </section>
+
+        <!-- Contact Grid Section -->
+        <section class="contact-grid-section">
+            <div class="container">
+                <div class="contact-cards grid reveal">
+                    <!-- Card 1: Phone -->
+                    <div class="contact-card">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-phone"></i>
+                        </div>
+                        <h3>Phone</h3>
+                        <p>+91 8668949853</p>
+                    </div>
+
+                    <!-- Card 2: Email -->
+                    <div class="contact-card">
+                        <div class="card-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                        </div>
+                        <h3>Email</h3>
+                        <p>prasadmadole36720@gmail.com</p>
+                    </div>
+
+                    <!-- Card 3: LinkedIn -->
+                    <a href="https://www.linkedin.com/in/prasad-madole-2360823ba" target="_blank" style="text-decoration: none; display: contents;">
+                        <div class="contact-card" style="cursor: pointer;">
+                            <div class="card-icon">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </div>
+                            <h3 style="color: var(--text-white);">LinkedIn</h3>
+                            <p style="color: var(--text-gray);">Connect with me</p>
+                        </div>
+                    </a>
+                    
+                    <!-- Card 4: GitHub -->
+                    <a href="https://github.com/PrasadCyberPerfect" target="_blank" style="text-decoration: none; display: contents;">
+                        <div class="contact-card" style="cursor: pointer;">
+                            <div class="card-icon">
+                                <i class="fa-brands fa-github"></i>
+                            </div>
+                            <h3 style="color: var(--text-white);">GitHub</h3>
+                            <p style="color: var(--text-gray);">View my profile</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Form Section -->
+        <section class="form-section">
+            <div class="container reveal">
+                <div class="form-wrapper">
+                    <div class="form-header">
+                        <h2>Send Me a Message</h2>
+                        <p>Fill out the form below and I'll get back to you shortly!</p>
+                    </div>
+                    
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder=" " required>
+                            <label for="name">Name</label>
+                            <div class="underline"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder=" " required>
+                            <label for="email">Email</label>
+                            <div class="underline"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="tel" id="phone" name="phone" placeholder=" ">
+                            <label for="phone">Phone</label>
+                            <div class="underline"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <textarea id="message" name="message" rows="4" placeholder=" " required></textarea>
+                            <label for="message">Message</label>
+                            <div class="underline"></div>
+                        </div>
+
+                        <button type="submit" class="submit-btn">
+                            Send Message
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- GSAP & ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Initialize GSAP ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Reveal animations
+        document.querySelectorAll('.reveal').forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // Form Submission (for demo)
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Message sent! (Demo only)');
+        });
+    </script>
+</body>
+</html>

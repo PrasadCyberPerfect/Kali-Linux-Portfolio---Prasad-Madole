@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Game | Prasad's Premium Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/snake-game.css">
+</head>
+<body>
+    <main class="main-container">
+        <section class="hero-section">
+            <div class="spotlight"></div>
+            <div class="container reveal">
+                <h1 class="hero-title">Retro Arcade</h1>
+                <p class="hero-subtitle">Classic Snake with a premium twist.</p>
+            </div>
+        </section>
+
+        <section class="game-section">
+            <div class="container reveal">
+                <div class="game-wrapper">
+                    <div class="game-header">
+                        <div class="score-container">
+                            <span class="score-label">SCORE:</span>
+                            <span id="score">000</span>
+                        </div>
+                        <div class="high-score-container">
+                            <span class="score-label">BEST:</span>
+                            <span id="high-score">000</span>
+                        </div>
+                    </div>
+                    <canvas id="snakeGame" width="400" height="400"></canvas>
+                    <div class="mode-selection">
+                        <button class="mode-btn active" data-speed="200">Slow</button>
+                        <button class="mode-btn" data-speed="100">Medium</button>
+                        <button class="mode-btn" data-speed="50">Hard</button>
+                    </div>
+                    <div class="game-controls">
+                        <p>Use <span class="key-hint">Arrow Keys</span> or <span class="key-hint">WASD</span> to control.</p>
+                        <button id="start-btn" class="start-btn">Start Game</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        document.querySelectorAll('.reveal').forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+                y: 50, opacity: 0, duration: 1, ease: "power3.out"
+            });
+        });
+
+        // Snake Game Logic
+        const canvas = document.getElementById('snakeGame');
+        const ctx = canvas.getContext('2d');
+        const scoreEl = document.getElementById('score');
+        const highScoreEl = document.getElementById('high-score');
+        const startBtn = document.getElementById('start-btn');
+        const modeBtns = document.querySelectorAll('.mode-btn');
+
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+        
+        let score = 0;
+        let highScore = localStorage.getItem('snakeHighScore') || 0;
+        highScoreEl.textContent = highScore.toString().padStart(3, '0');
+
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 5, y: 5};
+        let dx = 0;
+        let dy = 0;
+        let gameRunning = false;
+        let interval;
+        let gameSpeed = 200; // Default slow
+
+        // Mode Selection
+        modeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (gameRunning) return;
+                modeBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                gameSpeed = parseInt(btn.dataset.speed);
+            });
+        });
+
+        function drawGame() {
+            clearCanvas();
+            moveSnake();
+            checkGameOver();
+            drawFood();
+            drawSnake();
+        }
+
+        function clearCanvas() {
+            ctx.fillStyle = '#1E1F22';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // Draw subtle grid
+            ctx.strokeStyle = '#2A2A2E';
+            ctx.lineWidth = 0.5;
+            for(let i=0; i<canvas.width; i+=gridSize) {
+                ctx.beginPath(); ctx.moveTo(i,0); ctx.lineTo(i, canvas.height); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(0,i); ctx.lineTo(canvas.width, i); ctx.stroke();
+            }
+        }
+
+        function drawSnake() {
+            snake.forEach((part, index) => {
+                ctx.fillStyle = index === 0 ? '#FFFFFF' : '#A1A1AA';
+                ctx.shadowBlur = index === 0 ? 10 : 0;
+                ctx.shadowColor = '#FFFFFF';
+                ctx.fillRect(part.x * gridSize + 2, part.y * gridSize + 2, gridSize - 4, gridSize - 4);
+                ctx.shadowBlur = 0;
+            });
+        }
+
+        function moveSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            snake.unshift(head);
+            if(head.x === food.x && head.y === food.y) {
+                score += 10;
+                scoreEl.textContent = score.toString().padStart(3, '0');
+                if(score > highScore) {
+                    highScore = score;
+                    highScoreEl.textContent = highScore.toString().padStart(3, '0');
+                    localStorage.setItem('snakeHighScore', highScore);
+                }
+                generateFood();
+            } else {
+                snake.pop();
+            }
+        }
+
+        function generateFood() {
+            food = {
+                x: Math.floor(Math.random() * tileCount),
+                y: Math.floor(Math.random() * tileCount)
+            };
+            if(snake.some(part => part.x === food.x && part.y === food.y)) generateFood();
+        }
+
+        function drawFood() {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#FFFFFF';
+            ctx.beginPath();
+            ctx.arc(food.x * gridSize + gridSize/2, food.y * gridSize + gridSize/2, gridSize/4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function checkGameOver() {
+            const head = snake[0];
+            if(head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount ||
+               snake.slice(1).some(part => part.x === head.x && part.y === head.y)) {
+                gameOver();
+            }
+        }
+
+        function gameOver() {
+            gameRunning = false;
+            clearInterval(interval);
+            startBtn.textContent = 'Restart Game';
+            startBtn.style.display = 'block';
+            modeBtns.forEach(b => b.disabled = false); // Re-enable mode buttons
+            alert('Game Over! Your Score: ' + score);
+        }
+
+        function startGame() {
+            score = 0;
+            scoreEl.textContent = '000';
+            snake = [{x: 10, y: 10}];
+            dx = 1; dy = 0;
+            gameRunning = true;
+            startBtn.style.display = 'none';
+            modeBtns.forEach(b => b.disabled = true); // Disable mode selection during game
+            generateFood();
+            if(interval) clearInterval(interval);
+            interval = setInterval(drawGame, gameSpeed);
+        }
+
+        startBtn.addEventListener('click', startGame);
+
+        window.addEventListener('keydown', e => {
+            if(!gameRunning) return;
+            
+            // Prevent default scrolling for arrow keys
+            if(["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"].includes(e.key)) {
+                e.preventDefault();
+            }
+
+            switch(e.key) {
+                case 'ArrowUp': case 'w': if(dy !== 1) { dx = 0; dy = -1; } break;
+                case 'ArrowDown': case 's': if(dy !== -1) { dx = 0; dy = 1; } break;
+                case 'ArrowLeft': case 'a': if(dx !== 1) { dx = -1; dy = 0; } break;
+                case 'ArrowRight': case 'd': if(dx !== -1) { dx = 1; dy = 0; } break;
+            }
+        });
+    </script>
+</body>
+</html>

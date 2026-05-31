@@ -1,0 +1,123 @@
+/* ======================================
+   RESPONSIVE DESIGN
+   Mobile & tablet support
+   ====================================== */
+
+@media (max-width: 1024px) {
+    .desktop-icons {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)) !important;
+        grid-template-rows: auto !important;
+        grid-auto-flow: row !important;
+        gap: 15px !important;
+        padding: 60px 15px 100px 15px !important;
+        height: 100% !important;
+        overflow-y: auto !important;
+        position: relative !important;
+        z-index: 5 !important;
+    }
+
+    .desktop-icon {
+        position: static !important;
+        width: auto !important;
+        height: auto !important;
+        padding: 10px 5px !important;
+    }
+
+    .window {
+        min-width: 90% !important;
+        max-width: 95% !important;
+        min-height: 200px !important;
+        left: 2.5% !important;
+        top: 60px !important;
+    }
+
+    .window.maximized {
+        width: 100% !important;
+        height: calc(100% - var(--top-panel-height)) !important;
+        top: var(--top-panel-height) !important;
+        left: 0 !important;
+    }
+
+    .panel-search {
+        width: 150px !important;
+    }
+
+    .panel-search:focus-within {
+        width: 200px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .desktop-icons {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)) !important;
+        gap: 10px !important;
+        padding-top: 50px !important;
+        padding-bottom: 120px !important;
+    }
+
+    .desktop-icon i {
+        font-size: 24px !important;
+    }
+
+    .desktop-icon span {
+        font-size: 11px !important;
+    }
+
+    .panel-item.places-menu, 
+    .panel-item.terminal-shortcut,
+    .panel-item.cpu-indicator,
+    .panel-item.user-info {
+        display: none !important;
+    }
+
+    .panel-search {
+        width: 100px !important;
+        margin-left: 5px !important;
+    }
+
+    .panel-search:focus-within {
+        width: 140px !important;
+    }
+
+    .panel-left {
+        gap: 5px !important;
+    }
+
+    .window {
+        width: 100% !important;
+        max-width: 100% !important;
+        left: 0 !important;
+        height: calc(100% - 80px) !important;
+        border-radius: 0 !important;
+    }
+
+    .taskbar {
+        bottom: 5px !important;
+        padding: 0 5px !important;
+        min-width: 60px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .desktop-icons {
+        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)) !important;
+    }
+
+    .window {
+        width: 100% !important;
+        border-radius: 0 !important;
+    }
+}
+
+@media (max-width: 600px) {
+    .window {
+        min-width: 90%;
+        width: 90% !important;
+        height: 70% !important;
+    }
+
+    .desktop-icons {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
