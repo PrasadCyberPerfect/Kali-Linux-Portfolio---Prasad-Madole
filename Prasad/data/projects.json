@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Cyber Portfolio OS",
+        "description": "This interactive Kali Linux themed portfolio",
+        "tags": ["HTML", "CSS", "JavaScript"],
+        "link": "#"
+    },
+    {
+        "title": "Vulnerability Scanner",
+        "description": "Web application vulnerability scanner",
+        "tags": ["Security", "Testing"],
+        "link": "#"
+    },
+    {
+        "title": "Secure Chat App",
+        "description": "End-to-end encrypted chat application",
+        "tags": ["Security", "WebSockets"],
+        "link": "#"
+    }
+]

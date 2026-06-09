@@ -1,0 +1,18 @@
+[
+    {
+        "title": "Introduction to Cybersecurity",
+        "issuer": "Cisco Networking Academy",
+        "date": "May 2026",
+        "image": "assets/certificates/cisco-certificate.png",
+        "credential": "https://www.credly.com/badges/dbec65b4-c7fa-4840-b0ae-c9cca0a034c0",
+        "skills": ["Cyber Best Practices", "Cybersecurity", "Network Security"]
+    },
+    {
+        "title": "Introduction to Ethical Hacking",
+        "issuer": "Great Learning",
+        "date": "July 2024",
+        "image": "assets/certificates/great-learning-certificate.png",
+        "credential": "https://www.mygreatlearning.com/certificate/GGHGFKLD",
+        "skills": ["Computer Security Awareness", "Ethical Hacking Process", "Web App Attacks"]
+    }
+]

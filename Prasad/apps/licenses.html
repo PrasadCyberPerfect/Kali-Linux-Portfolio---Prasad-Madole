@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Licenses & Certifications | Prasad's Premium Project</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/licenses.css">
+</head>
+<body>
+    <main class="main-container">
+        <section class="hero-section">
+            <div class="spotlight"></div>
+            <div class="container reveal">
+                <h1 class="hero-title">Licenses & Certifications</h1>
+                <p class="hero-subtitle">Professional credentials and certifications</p>
+            </div>
+        </section>
+
+        <section class="certifications-section">
+            <div class="container">
+                <div class="certifications-grid reveal">
+                    <div class="cert-card" onclick="openCertificate({
+                        title: 'Introduction to Ethical Hacking',
+                        image: 'assets/img/great-learning-certificate.png',
+                        link: 'https://www.mygreatlearning.com/certificate/GGHGFKLD',
+                        skills: ['Computer security awareness', 'Ethical hacking process', 'Web app attacks', 'Application Security']
+                    })">
+                        <div class="cert-icon">
+                            <img src="../assets/img/great-learning-icon.png" alt="Great Learning" class="cert-logo">
+                        </div>
+                        <div class="cert-content">
+                            <h3>Introduction to Ethical Hacking</h3>
+                            <p class="cert-issuer">Great Learning</p>
+                            <p class="cert-date">Issued: July 2024</p>
+                            <p class="cert-click-hint">Click to view certificate</p>
+                        </div>
+                    </div>
+                    <div class="cert-card" onclick="openCertificate({
+                        title: 'Introduction to Cybersecurity',
+                        image: 'assets/img/cisco-certificate.png',
+                        link: 'https://www.credly.com/badges/dbec65b4-c7fa-4840-b0ae-c9cca0a034c0',
+                        skills: ['Cyber Best Practices', 'Cybersecurity', 'Network Security']
+                    })">
+                        <div class="cert-icon">
+                            <img src="../assets/img/cisco-networking-academy.png" alt="Cisco Networking Academy" class="cert-logo">
+                        </div>
+                        <div class="cert-content">
+                            <h3>Introduction to Cybersecurity</h3>
+                            <p class="cert-issuer">Cisco Networking Academy</p>
+                            <p class="cert-date">Issued: May 2026</p>
+                            <p class="cert-click-hint">Click to view certificate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+        document.querySelectorAll('.reveal').forEach((el) => {
+            gsap.from(el, {
+                scrollTrigger: { trigger: el, start: "top 85%", toggleActions: "play none none none" },
+                y: 50, opacity: 0, duration: 1, ease: "power3.out"
+            });
+        });
+
+        function openCertificate(data) {
+            window.parent.postMessage({
+                type: 'openCertificate',
+                data: data
+            }, '*');
+        }
+    </script>
+</body>
+</html>
